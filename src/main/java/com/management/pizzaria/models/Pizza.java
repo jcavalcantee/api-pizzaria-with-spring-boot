@@ -1,5 +1,6 @@
 package com.management.pizzaria.models;
 
+import com.management.pizzaria.dtos.PizzaDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,6 +17,20 @@ public class Pizza {
     private String flavor;
     @Column(name = "Ingredientes")
     private String ingredients;
+
+    public Pizza() {
+    }
+
+    public Pizza(Long id, String flavor, String ingredients) {
+        this.id = id;
+        this.flavor = flavor;
+        this.ingredients = ingredients;
+    }
+
+    public Pizza(PizzaDTO pizzaDTO) {
+        this.flavor = pizzaDTO.flavor();
+        this.ingredients = pizzaDTO.ingredients();
+    }
 
     public Long getId() {
         return id;
@@ -41,7 +56,6 @@ public class Pizza {
         this.ingredients = ingredients;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -49,7 +63,6 @@ public class Pizza {
         return Objects.equals(id, pizza.id) && Objects.equals(flavor, pizza.flavor) && Objects.equals(ingredients, pizza.ingredients);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, flavor, ingredients);
     }
