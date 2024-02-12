@@ -1,5 +1,6 @@
 package com.management.pizzaria.models;
 
+import com.management.pizzaria.dtos.ProductDTO;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -14,8 +15,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-    @Column(nullable = false, name = "Preço")
-    private BigDecimal price;
+    @Column( name = "Preço")
+    protected BigDecimal price;
+
+    public Product() {
+    }
+
+    public Product(Long id, BigDecimal price) {
+        this.id = id;
+        this.price = price;
+    }
+
+    public Product(ProductDTO productDTO) {
+        this.price = productDTO.price();
+    }
 
     public Long getId() {
         return id;

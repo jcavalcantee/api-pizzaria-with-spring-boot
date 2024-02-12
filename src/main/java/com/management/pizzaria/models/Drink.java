@@ -7,22 +7,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "TB_DRINKS")
-public class Drink {
+public class Drink extends Product{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+
     @Column(nullable = false, name = "Nome")
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -35,25 +24,26 @@ public class Drink {
     public Drink() {
     }
 
-    public Drink(Long id, String name) {
-        this.id = id;
+    public Drink(String name) {
         this.name = name;
     }
 
     public Drink (DrinkDTO drinkDTO) {
         this.name = drinkDTO.name();
+        this.price = drinkDTO.price();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Drink drink = (Drink) o;
-        return Objects.equals(id, drink.id) && Objects.equals(name, drink.name);
+        return Objects.equals(name, drink.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(super.hashCode(), name);
     }
 }

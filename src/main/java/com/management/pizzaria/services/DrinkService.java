@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DrinkService {
+public class DrinkService extends ProductService{
 
     @Autowired
     private DrinkRepository drinkRepository;
@@ -38,6 +38,7 @@ public class DrinkService {
     public Drink updateDrink(Long id, Drink drink) throws Exception {
         Drink existDrink = this.drinkRepository.findById(id).orElseThrow(() -> new Exception("Drink with ID provided not found"));
         existDrink.setName(drink.getName());
+        existDrink.setPrice(drink.getPrice());
         return this.drinkRepository.save(existDrink);
     }
 
