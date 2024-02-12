@@ -1,7 +1,10 @@
 package com.management.pizzaria.dtos;
 
+import java.math.BigDecimal;
+
 public record PizzaDTO(
         String flavor,
-        String ingredients
+        String ingredients,
+        BigDecimal price
 ) {
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PizzaService {
+public class PizzaService extends ProductService {
 
     @Autowired
     private PizzaRepository pizzaRepository;
@@ -39,6 +39,7 @@ public class PizzaService {
         Pizza existPizza = this.pizzaRepository.findById(id).orElseThrow(() -> new Exception("Pizza with ID provided not found"));
         existPizza.setFlavor(pizza.getFlavor());
         existPizza.setIngredients(pizza.getIngredients());
+        existPizza.setPrice((pizza.getPrice()));
 
         return this.pizzaRepository.save(existPizza);
     }

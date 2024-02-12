@@ -2,8 +2,7 @@ package com.management.pizzaria.dtos;
 
 import java.math.BigDecimal;
 
-public record DrinkDTO(
-        String name,
+public record ProductDTO(
         BigDecimal price
 ) {
 }
