@@ -1,5 +1,6 @@
 package com.management.pizzaria.models;
 
+import com.management.pizzaria.dtos.DrinkDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -29,6 +30,18 @@ public class Drink {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Drink() {
+    }
+
+    public Drink(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Drink (DrinkDTO drinkDTO) {
+        this.name = drinkDTO.name();
     }
 
     @Override
