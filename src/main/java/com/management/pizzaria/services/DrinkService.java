@@ -38,11 +38,16 @@ public class DrinkService extends ProductService{
     public Drink updateDrink(Long id, Drink drink) throws Exception {
         Drink existDrink = this.drinkRepository.findById(id).orElseThrow(() -> new Exception("Drink with ID provided not found"));
         existDrink.setName(drink.getName());
+        existDrink.setDrinkType(drink.getDrinkType());
         existDrink.setPrice(drink.getPrice());
         return this.drinkRepository.save(existDrink);
     }
 
     public void deleteDrink(Long id) throws EmptyResultDataAccessException{
-        this.drinkRepository.deleteById(id);
+        try {
+            this.drinkRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

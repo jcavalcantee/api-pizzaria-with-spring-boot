@@ -22,6 +22,15 @@ public class Order {
         return paymentId;
     }
 
+    public Order() {
+    }
+
+    public Order(Long paymentId, Date orderDate, PaymentType paymentType) {
+        this.paymentId = paymentId;
+        this.orderDate = orderDate;
+        this.paymentType = paymentType;
+    }
+
     public void setPaymentId(Long paymentId) {
         this.paymentId = paymentId;
     }

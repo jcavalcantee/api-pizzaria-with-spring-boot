@@ -13,12 +13,17 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+    @Column(nullable = false, name = "Nome")
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, name = "Telefone")
     private String telphone;
+    @Column(nullable = false, name = "CEP")
     private String zipCode;
+    @Column(nullable = false, name = "Rua")
     private String street;
+    @Column(nullable = false, name = "Numero_casa")
     private String number;
+    @Column(nullable = false, name = "Bairro")
     private String district;
 
     public Customer() {
