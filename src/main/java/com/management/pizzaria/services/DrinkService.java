@@ -4,7 +4,6 @@ import com.management.pizzaria.dtos.DrinkDTO;
 import com.management.pizzaria.models.Drink;
 import com.management.pizzaria.repositories.DrinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -43,11 +42,13 @@ public class DrinkService extends ProductService{
         return this.drinkRepository.save(existDrink);
     }
 
-    public void deleteDrink(Long id) throws EmptyResultDataAccessException{
-        try {
+    public ResponseEntity<Drink> deleteDrink(Long id) {
+
+        if (drinkRepository.findById(id).isPresent()) {
             this.drinkRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
+

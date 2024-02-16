@@ -49,11 +49,13 @@ public class CustomerService {
         return customerRepository.save(existCustomer);
     }
 
-    public void deleteCustomer(Long id) {
-        try {
-            customerRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Customer> deleteCustomer(Long id) {
+
+        if (customerRepository.findById(id).isPresent()) {
+            this.customerRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
+
