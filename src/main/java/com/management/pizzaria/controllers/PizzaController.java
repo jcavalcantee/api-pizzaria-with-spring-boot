@@ -3,7 +3,6 @@ package com.management.pizzaria.controllers;
 import com.management.pizzaria.dtos.PizzaDTO;
 import com.management.pizzaria.models.Pizza;
 import com.management.pizzaria.services.PizzaService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,6 @@ public class PizzaController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Pizza> deletePizza(@PathVariable (value = "id") Long id) {
-        this.pizzaService.deletePizza(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return this.pizzaService.deletePizza(id);
     }
 }

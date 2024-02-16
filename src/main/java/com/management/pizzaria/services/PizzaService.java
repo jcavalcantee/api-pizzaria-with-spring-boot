@@ -5,6 +5,7 @@ import com.management.pizzaria.models.Pizza;
 import com.management.pizzaria.repositories.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,13 @@ public class PizzaService extends ProductService {
         return this.pizzaRepository.save(existPizza);
     }
 
-    public void deletePizza(Long id) {
-        try {
+    public ResponseEntity<Pizza> deletePizza(Long id) {
+
+        if (pizzaRepository.findById(id).isPresent()) {
             this.pizzaRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-}
+

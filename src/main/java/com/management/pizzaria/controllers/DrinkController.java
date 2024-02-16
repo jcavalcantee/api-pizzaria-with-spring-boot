@@ -43,7 +43,6 @@ public class DrinkController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Drink> deleteDrinkById(@PathVariable (value = "id") Long id) throws Exception {
-        this.drinkService.deleteDrink(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return this.drinkService.deleteDrink(id);
     }
 }
