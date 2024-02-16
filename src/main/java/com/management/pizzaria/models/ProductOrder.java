@@ -1,5 +1,6 @@
 package com.management.pizzaria.models;
 
+import com.management.pizzaria.dtos.ProductOrderDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,8 +21,6 @@ public class ProductOrder {
     private Product product;
     @Column(nullable = false, name = "Quantidade")
     private int quantity;
-
-    //private List<ProductOrderDTO> productOrderDTO;
 
     public ProductOrder() {
     }
