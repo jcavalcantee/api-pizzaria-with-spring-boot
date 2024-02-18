@@ -35,6 +35,12 @@ public class DrinkController {
         return new ResponseEntity<>(drink, HttpStatus.OK);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Drink> getDrinkByName(@PathVariable (value = "name") String name) throws Exception {
+        var drink = this.drinkService.getDrinkByName(name);
+        return new ResponseEntity<>(drink, HttpStatus.OK);
+    }
+
     @PutMapping("{id}")
     public ResponseEntity<Drink> updateDrink(@PathVariable (value = "id") Long id, @RequestBody Drink drink) throws Exception {
         var drinkUpdate = this.drinkService.updateDrink(id, drink);
