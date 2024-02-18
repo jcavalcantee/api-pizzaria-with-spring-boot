@@ -1,6 +1,8 @@
 package com.management.pizzaria.services;
 
 import com.management.pizzaria.dtos.PizzaDTO;
+import com.management.pizzaria.exceptions.ProductNotFoundException;
+import com.management.pizzaria.models.Drink;
 import com.management.pizzaria.models.Pizza;
 import com.management.pizzaria.repositories.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PizzaService extends ProductService {
@@ -34,6 +37,15 @@ public class PizzaService extends ProductService {
 
     public Pizza getPizzaById(Long id) throws Exception{
         return this.pizzaRepository.findById(id).orElseThrow(() -> new Exception("Pizza with ID provided not found"));
+    }
+
+    public Pizza getPizzaByFlavor(String flavor) throws ProductNotFoundException {
+        Optional<Pizza> pizzaOptional = Optional.ofNullable(this.pizzaRepository.findByFlavor(flavor));
+        if (pizzaOptional.isPresent()) {
+            return pizzaOptional.get();
+        } else {
+            throw new ProductNotFoundException("Pizza with flavor provided not found");
+        }
     }
 
     public Pizza updatePizza(Long id, Pizza pizza) throws Exception{
