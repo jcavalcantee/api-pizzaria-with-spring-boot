@@ -1,7 +1,9 @@
 package com.management.pizzaria.controllers;
 
 import com.management.pizzaria.dtos.CustomerDTO;
+import com.management.pizzaria.exceptions.CustomerNotFoundException;
 import com.management.pizzaria.models.Customer;
+import com.management.pizzaria.models.Drink;
 import com.management.pizzaria.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,11 @@ public class CustomerController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Customer> getCustomerByName(@PathVariable (value = "name") String name) throws CustomerNotFoundException {
+        var customer = this.customerService.getCustomerByName(name);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
     @PutMapping("{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable (value = "id") Long id, @RequestBody Customer customer) throws Exception {
         var customerUpdate = this.customerService.updateCustomer(id, customer);
