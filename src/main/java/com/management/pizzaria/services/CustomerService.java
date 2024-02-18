@@ -1,7 +1,10 @@
 package com.management.pizzaria.services;
 
 import com.management.pizzaria.dtos.CustomerDTO;
+import com.management.pizzaria.exceptions.CustomerNotFoundException;
+import com.management.pizzaria.exceptions.ProductNotFoundException;
 import com.management.pizzaria.models.Customer;
+import com.management.pizzaria.models.Pizza;
 import com.management.pizzaria.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -34,6 +38,14 @@ public class CustomerService {
     public Customer getCustomerById(Long id) throws Exception{
         return this.customerRepository.findById(id).orElseThrow(
                 () -> new Exception("Customer with ID provided not found!"));
+    }
+    public Customer getCustomerByName(String name) throws CustomerNotFoundException {
+        Optional<Customer> customerOptional = Optional.ofNullable(this.customerRepository.findByName(name));
+        if (customerOptional.isPresent()) {
+            return customerOptional.get();
+        } else {
+            throw new CustomerNotFoundException("Customer with name provided not found");
+        }
     }
 
     public Customer updateCustomer(Long id, Customer customer) throws Exception{
