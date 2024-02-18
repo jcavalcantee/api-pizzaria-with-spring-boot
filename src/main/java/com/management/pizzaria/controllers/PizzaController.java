@@ -1,6 +1,7 @@
 package com.management.pizzaria.controllers;
 
 import com.management.pizzaria.dtos.PizzaDTO;
+import com.management.pizzaria.exceptions.ProductNotFoundException;
 import com.management.pizzaria.models.Pizza;
 import com.management.pizzaria.services.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class PizzaController {
     @GetMapping("{id}")
     public ResponseEntity<Pizza> getPizzaById(@PathVariable (value = "id") Long id) throws Exception {
         var pizza = this.pizzaService.getPizzaById(id);
+        return new ResponseEntity<>(pizza, HttpStatus.OK);
+    }
+
+    @GetMapping("/flavor/{flavor}")
+    public ResponseEntity<Pizza> getPizzaByFlavor(@PathVariable (value = "flavor") String flavor) throws Exception {
+        var pizza = pizzaService.getPizzaByFlavor(flavor);
         return new ResponseEntity<>(pizza, HttpStatus.OK);
     }
 
