@@ -1,13 +1,13 @@
 package com.management.pizzaria.services;
 
+import com.management.pizzaria.controllers.CustomerController;
 import com.management.pizzaria.dtos.CustomerDTO;
 import com.management.pizzaria.exceptions.CustomerNotFoundException;
-import com.management.pizzaria.exceptions.ProductNotFoundException;
 import com.management.pizzaria.models.Customer;
-import com.management.pizzaria.models.Pizza;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.management.pizzaria.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,12 +32,23 @@ public class CustomerService {
     }
 
     public List<Customer> allCustomers() {
-        return this.customerRepository.findAll();
+        var customer = customerRepository.findAll();
+        customer
+                .forEach(c -> {
+                    try {
+                        c.add(linkTo(methodOn(CustomerController.class).findCustomerById(c.getKey())).withSelfRel());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        return customer;
     }
 
-    public Customer getCustomerById(Long id) throws Exception{
-        return this.customerRepository.findById(id).orElseThrow(
+    public Customer getCustomerById(Long id) throws Exception {
+        var customer = this.customerRepository.findById(id).orElseThrow(
                 () -> new Exception("Customer with ID provided not found!"));
+        customer.add(linkTo(methodOn(CustomerController.class).findCustomerById(id)).withSelfRel());
+        return customer;
     }
     public Customer getCustomerByName(String name) throws CustomerNotFoundException {
         Optional<Customer> customerOptional = Optional.ofNullable(this.customerRepository.findByName(name));
@@ -57,6 +68,8 @@ public class CustomerService {
         existCustomer.setStreet(customer.getStreet());
         existCustomer.setDistrict(customer.getDistrict());
         existCustomer.setNumber(customer.getNumber());
+
+        existCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(id)).withSelfRel());
 
         return customerRepository.save(existCustomer);
     }
