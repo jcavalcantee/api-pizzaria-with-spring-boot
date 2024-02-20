@@ -30,10 +30,10 @@ public class CustomerService {
         this.saveCustomer(newCustomer);
         newCustomer.add(linkTo(methodOn(CustomerController.class).saveCustomer(customerDTO)).withSelfRel());
         newCustomer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(customerDTO.name())).withRel("Find By Name"));
-        newCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(newCustomer.getKey())).withRel("Find By Id"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(newCustomer.getId())).withRel("Find By Id"));
         newCustomer.add(linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("Find All"));
-        newCustomer.add(linkTo(methodOn(CustomerController.class).updateCustomer(newCustomer.getKey(), newCustomer)).withRel("Update Customer"));
-        newCustomer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(newCustomer.getKey())).withRel("Delete Customer"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).updateCustomer(newCustomer.getId(), newCustomer)).withRel("Update Customer"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(newCustomer.getId())).withRel("Delete Customer"));
         return newCustomer;
     }
 
@@ -42,7 +42,7 @@ public class CustomerService {
         customer
                 .forEach(c -> {
                     try {
-                        c.add(linkTo(methodOn(CustomerController.class).findCustomerById(c.getKey())).withSelfRel());
+                        c.add(linkTo(methodOn(CustomerController.class).findCustomerById(c.getId())).withSelfRel());
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
