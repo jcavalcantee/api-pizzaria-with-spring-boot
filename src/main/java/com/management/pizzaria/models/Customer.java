@@ -15,7 +15,7 @@ public class Customer extends RepresentationModel<Customer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long key;
+    private Long id;
     @Column(nullable = false, name = "Nome")
     private String name;
     @Column(unique = true, name = "Telefone")
@@ -32,8 +32,8 @@ public class Customer extends RepresentationModel<Customer> {
     public Customer() {
     }
 
-    public Customer(Long key, String name, String telphone, String zipCode, String street, String number, String district) {
-        this.key = key;
+    public Customer(Long id, String name, String telphone, String zipCode, String street, String number, String district) {
+        this.id = id;
         this.name = name;
         this.telphone = telphone;
         this.zipCode = zipCode;
@@ -51,12 +51,12 @@ public class Customer extends RepresentationModel<Customer> {
         this.number = customerDTO.number();
     }
 
-    public Long getKey() {
-        return key;
+    public Long getId() {
+        return id;
     }
 
-    public void setKey(Long key) {
-        this.key = key;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -111,10 +111,10 @@ public class Customer extends RepresentationModel<Customer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(key, customer.key) && Objects.equals(name, customer.name) && Objects.equals(telphone, customer.telphone) && Objects.equals(zipCode, customer.zipCode) && Objects.equals(street, customer.street) && Objects.equals(number, customer.number) && Objects.equals(district, customer.district);
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(telphone, customer.telphone) && Objects.equals(zipCode, customer.zipCode) && Objects.equals(street, customer.street) && Objects.equals(number, customer.number) && Objects.equals(district, customer.district);
     }
 
     public int hashCode() {
-        return Objects.hash(key, name, telphone, zipCode, street, number, district);
+        return Objects.hash(id, name, telphone, zipCode, street, number, district);
     }
 }
