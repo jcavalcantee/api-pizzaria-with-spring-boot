@@ -13,37 +13,35 @@ public class ProductOrder {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
-    @ManyToOne
+    private Long order;
     @JoinColumn(name = "product_id")
-    private Product product;
+    private Long product;
     @Column(nullable = false, name = "Quantidade")
     private int quantity;
 
     public ProductOrder() {
     }
-
-    public ProductOrder(Order order, Product product, int quantity) {
+    public ProductOrder(Long order, Long product, int quantity) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
+
     }
 
-    public Order getOrder() {
+    public Long getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Long order) {
         this.order = order;
     }
 
-    public Product getProduct() {
+    public Long getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(Long product) {
         this.product = product;
     }
 

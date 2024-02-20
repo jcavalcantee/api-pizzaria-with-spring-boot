@@ -14,27 +14,27 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long paymentId;
+    private Long orderId;
     @Column(name = "Data_Pedido")
     private Date orderDate;
     @Column(name = "Tipo_Pagamento")
     private PaymentType paymentType;
 
-    public Long getPaymentId() {
-        return paymentId;
+    public Long getOrderId() {
+        return orderId;
     }
 
     public Order() {
     }
 
-    public Order(Long paymentId, Date orderDate, PaymentType paymentType) {
-        this.paymentId = paymentId;
+    public Order(Long orderId, Date orderDate, PaymentType paymentType) {
+        this.orderId = orderId;
         this.orderDate = orderDate;
         this.paymentType = paymentType;
     }
 
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
+    public void setOrderId(Long paymentId) {
+        this.orderId = paymentId;
     }
 
     public Date getOrderDate() {
@@ -58,11 +58,11 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(paymentId, order.paymentId) && Objects.equals(orderDate, order.orderDate) && paymentType == order.paymentType;
+        return Objects.equals(orderId, order.orderId) && Objects.equals(orderDate, order.orderDate) && paymentType == order.paymentType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentId, orderDate, paymentType);
+        return Objects.hash(orderId, orderDate, paymentType);
     }
 }
