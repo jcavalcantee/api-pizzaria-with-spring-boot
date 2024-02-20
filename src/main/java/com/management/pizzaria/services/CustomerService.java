@@ -48,6 +48,9 @@ public class CustomerService {
         var customer = this.customerRepository.findById(id).orElseThrow(
                 () -> new Exception("Customer with ID provided not found!"));
         customer.add(linkTo(methodOn(CustomerController.class).findCustomerById(id)).withSelfRel());
+        customer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(customer.getName())).withRel("Find Customer By Name"));
+        customer.add(linkTo(methodOn(CustomerController.class).updateCustomer(id, customer)).withRel("Update Customer"));
+        customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(id)).withRel("Delete Customer"));
         return customer;
     }
     public Customer getCustomerByName(String name) throws CustomerNotFoundException {

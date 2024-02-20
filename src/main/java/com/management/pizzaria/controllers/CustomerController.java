@@ -42,13 +42,13 @@ public class CustomerController {
         var customer = this.customerService.getCustomerByName(name);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
-    @PutMapping("{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable (value = "id") Long id, @RequestBody Customer customer) throws Exception {
         var customerUpdate = this.customerService.updateCustomer(id, customer);
         return new ResponseEntity<>(customerUpdate, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable (value = "id") Long id) {
         return this.customerService.deleteCustomer(id);
     }
