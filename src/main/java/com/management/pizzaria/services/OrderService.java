@@ -36,6 +36,7 @@ public class OrderService {
 
         BigDecimal totalOrder = BigDecimal.ZERO;
 
+        orderRepository.save(order);
         for (ProductOrderDTO productOrderDTO : itemsOrderDTO) {
             Long productId = productOrderDTO.productId();
             int quantity = productOrderDTO.quantity();
@@ -43,15 +44,20 @@ public class OrderService {
             Product product = this.productRepository.findById((long) productOrderDTO.productId())
                     .orElseThrow(() -> new Exception("Product not found!"));
 
-            ProductOrderKey productOrderKey = new ProductOrderKey(order, product);
+            order.setOrderId(productOrderDTO.orderId());
 
-            ProductOrder productOrder = new ProductOrder(productOrderKey, quantity);
+            ProductOrderKey productOrderKey = new ProductOrderKey(order.getOrderId(), productId);
+            ProductOrder productOrder = new ProductOrder();
+            productOrder.setProduct(productOrderDTO.productId());
+            productOrder.setOrder(order.getOrderId());
+            productOrder.setQuantity(productOrderDTO.quantity());
+
+            productOrderRepository.save(productOrder);
 
             BigDecimal subTotal = product.getPrice().multiply(BigDecimal.valueOf(quantity));
             totalOrder = totalOrder.add(subTotal);
         }
 
-        orderRepository.save(order);
         return order;
     }
 
