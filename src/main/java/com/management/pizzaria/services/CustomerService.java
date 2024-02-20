@@ -25,9 +25,15 @@ public class CustomerService {
         this.customerRepository.save(customer);
     }
 
-    public Customer createCustomer(CustomerDTO customerDTO) {
+    public Customer createCustomer(CustomerDTO customerDTO) throws Exception {
         Customer newCustomer = new Customer(customerDTO);
         this.saveCustomer(newCustomer);
+        newCustomer.add(linkTo(methodOn(CustomerController.class).saveCustomer(customerDTO)).withSelfRel());
+        newCustomer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(customerDTO.name())).withRel("Find By Name"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(newCustomer.getKey())).withRel("Find By Id"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("Find All"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).updateCustomer(newCustomer.getKey(), newCustomer)).withRel("Update Customer"));
+        newCustomer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(newCustomer.getKey())).withRel("Delete Customer"));
         return newCustomer;
     }
 
@@ -46,9 +52,10 @@ public class CustomerService {
 
     public Customer getCustomerById(Long id) throws Exception {
         var customer = this.customerRepository.findById(id).orElseThrow(
-                () -> new Exception("Customer with ID provided not found!"));
+                () -> new CustomerNotFoundException("Customer with ID provided not found!"));
         customer.add(linkTo(methodOn(CustomerController.class).findCustomerById(id)).withSelfRel());
-        customer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(customer.getName())).withRel("Find Customer By Name"));
+        customer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(customer.getName())).withRel("Find By Name"));
+        customer.add(linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("Find all"));
         customer.add(linkTo(methodOn(CustomerController.class).updateCustomer(id, customer)).withRel("Update Customer"));
         customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(id)).withRel("Delete Customer"));
         return customer;
