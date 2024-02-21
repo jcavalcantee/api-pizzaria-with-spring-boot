@@ -7,6 +7,8 @@ import com.management.pizzaria.models.*;
 import com.management.pizzaria.repositories.OrderRepository;
 import com.management.pizzaria.repositories.ProductOrderRepository;
 import com.management.pizzaria.repositories.ProductRepository;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,7 @@ public class OrderService {
         BigDecimal totalOrder = BigDecimal.ZERO;
 
         orderRepository.save(order);
+        order.setOrderId(encontrarIdPorData(order.getOrderDate()));
         for (ProductOrderDTO productOrderDTO : itemsOrderDTO) {
             Long productId = productOrderDTO.productId();
             int quantity = productOrderDTO.quantity();
@@ -44,12 +47,9 @@ public class OrderService {
             Product product = this.productRepository.findById((long) productOrderDTO.productId())
                     .orElseThrow(() -> new Exception("Product not found!"));
 
-            order.setOrderId(productOrderDTO.orderId());
 
-            ProductOrderKey productOrderKey = new ProductOrderKey(order.getOrderId(), productId);
             ProductOrder productOrder = new ProductOrder();
-            productOrder.setProduct(productOrderDTO.productId());
-            productOrder.setOrder(order.getOrderId());
+            productOrder.setId(new ProductOrderKey(order, product));
             productOrder.setQuantity(productOrderDTO.quantity());
 
             productOrderRepository.save(productOrder);
@@ -59,6 +59,10 @@ public class OrderService {
         }
 
         return order;
+    }
+
+    private Long encontrarIdPorData(Date dataPedido){
+        return orderRepository.encontrarIdPorData(dataPedido);
     }
 
     public List<Order> listAllOrders() {

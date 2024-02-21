@@ -12,33 +12,33 @@ public class ProductOrderKey implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Long order;
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Long product;
+    private Product product;
 
     public ProductOrderKey() {
     }
 
-    public ProductOrderKey(Long order, Long product) {
+    public ProductOrderKey(Order order, Product product) {
         this.order = order;
         this.product = product;
     }
 
-    public Long getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Long order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
-    public Long getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Long product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 

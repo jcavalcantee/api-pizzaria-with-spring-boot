@@ -10,39 +10,25 @@ import java.util.Objects;
 @Table(name = "TB_PRODUCT_ORDERS")
 public class ProductOrder {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
-    @JoinColumn(name = "order_id")
-    private Long order;
-    @JoinColumn(name = "product_id")
-    private Long product;
+    @EmbeddedId
+    private ProductOrderKey id;
     @Column(nullable = false, name = "Quantidade")
     private int quantity;
 
     public ProductOrder() {
     }
-    public ProductOrder(Long order, Long product, int quantity) {
-        this.order = order;
-        this.product = product;
+
+    public ProductOrder(ProductOrderKey id, int quantity) {
+        this.id = id;
         this.quantity = quantity;
-
     }
 
-    public Long getOrder() {
-        return order;
+    public ProductOrderKey getId() {
+        return id;
     }
 
-    public void setOrder(Long order) {
-        this.order = order;
-    }
-
-    public Long getProduct() {
-        return product;
-    }
-
-    public void setProduct(Long product) {
-        this.product = product;
+    public void setId(ProductOrderKey id) {
+        this.id = id;
     }
 
     public int getQuantity() {
@@ -58,11 +44,11 @@ public class ProductOrder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductOrder that = (ProductOrder) o;
-        return Objects.equals(order, that.order) && Objects.equals(product, that.product) && Objects.equals(quantity, that.quantity);
+        return quantity == that.quantity && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(order, product, quantity);
+        return Objects.hash(id, quantity);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public record OrderDTO(
-    Long paymentId,
+    Long orderId,
     Date orderDate,
     PaymentType paymentType,
     List<ProductOrderDTO> itemsOrder

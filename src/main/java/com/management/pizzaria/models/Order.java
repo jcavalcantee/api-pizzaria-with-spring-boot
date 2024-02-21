@@ -15,10 +15,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long orderId;
-    @Column(name = "Data_Pedido")
-    private Date orderDate;
     @Column(name = "Tipo_Pagamento")
     private PaymentType paymentType;
+    @Column(name = "Data_Pedido")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderDate;
 
     public Long getOrderId() {
         return orderId;
