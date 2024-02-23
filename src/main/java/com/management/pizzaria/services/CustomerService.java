@@ -43,6 +43,10 @@ public class CustomerService {
                 .forEach(c -> {
                     try {
                         c.add(linkTo(methodOn(CustomerController.class).findCustomerById(c.getId())).withSelfRel());
+                        c.add(linkTo(methodOn(CustomerController.class).getCustomerByName(c.getName())).withRel("Find By Name"));
+                        c.add(linkTo(methodOn(CustomerController.class).findCustomerById(c.getId())).withRel("Find By ID"));
+                        c.add(linkTo(methodOn(CustomerController.class).updateCustomer(c.getId(), new Customer())).withRel("Update Customer"));
+                        c.add(linkTo(methodOn(CustomerController.class).deleteCustomer(c.getId())).withRel("Delete Customer"));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -60,10 +64,15 @@ public class CustomerService {
         customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(id)).withRel("Delete Customer"));
         return customer;
     }
-    public Customer getCustomerByName(String name) throws CustomerNotFoundException {
-        Optional<Customer> customerOptional = Optional.ofNullable(this.customerRepository.findByName(name));
-        if (customerOptional.isPresent()) {
-            return customerOptional.get();
+    public Customer getCustomerByName(String name) throws Exception {
+        var customer = this.customerRepository.findByName(name);
+        if (customer != null) {
+            customer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(customer.getName())).withSelfRel());
+            customer.add(linkTo(methodOn(CustomerController.class).findCustomerById(customer.getId())).withRel("Find By ID"));
+            customer.add(linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("Find all"));
+            customer.add(linkTo(methodOn(CustomerController.class).updateCustomer(customer.getId(), customer)).withRel("Update Customer"));
+            customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(customer.getId())).withRel("Delete Customer"));
+            return customer;
         } else {
             throw new CustomerNotFoundException("Customer with name provided not found");
         }
@@ -79,7 +88,11 @@ public class CustomerService {
         existCustomer.setDistrict(customer.getDistrict());
         existCustomer.setNumber(customer.getNumber());
 
-        existCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(id)).withSelfRel());
+        existCustomer.add(linkTo(methodOn(CustomerController.class).updateCustomer(existCustomer.getId(), customer)).withSelfRel());
+        existCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(existCustomer.getId())).withRel("Find By ID"));
+        existCustomer.add(linkTo(methodOn(CustomerController.class).getCustomerByName(existCustomer.getName())).withRel("Find By Name"));
+        existCustomer.add(linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("Find All"));
+        existCustomer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(existCustomer.getId())).withRel("Delete Customer"));
 
         return customerRepository.save(existCustomer);
     }

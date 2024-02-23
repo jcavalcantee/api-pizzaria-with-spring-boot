@@ -38,7 +38,7 @@ public class CustomerController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Customer> getCustomerByName(@PathVariable (value = "name") String name) throws CustomerNotFoundException {
+    public ResponseEntity<Customer> getCustomerByName(@PathVariable (value = "name") String name) throws Exception {
         var customer = this.customerService.getCustomerByName(name);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
