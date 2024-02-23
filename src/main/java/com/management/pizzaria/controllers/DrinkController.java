@@ -1,6 +1,7 @@
 package com.management.pizzaria.controllers;
 
 import com.management.pizzaria.dtos.DrinkDTO;
+import com.management.pizzaria.exceptions.ProductNotFoundException;
 import com.management.pizzaria.models.Drink;
 import com.management.pizzaria.services.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class DrinkController {
     private DrinkService drinkService;
 
     @PostMapping
-    public ResponseEntity<Drink> createDrink (@RequestBody DrinkDTO drinkDTO) {
+    public ResponseEntity<Drink> createDrink (@RequestBody DrinkDTO drinkDTO) throws Exception {
         Drink newDrink = this.drinkService.createDrink(drinkDTO);
         return new ResponseEntity<>(newDrink, HttpStatus.CREATED);
     }
@@ -30,7 +31,7 @@ public class DrinkController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Drink> getDrinkByID(@PathVariable (value = "id") Long id) throws Exception{
+    public ResponseEntity<Drink> getDrinkByID(@PathVariable (value = "id") Long id) throws Exception {
         var drink = this.drinkService.getDrinkById(id);
         return new ResponseEntity<>(drink, HttpStatus.OK);
     }
@@ -41,13 +42,13 @@ public class DrinkController {
         return new ResponseEntity<>(drink, HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Drink> updateDrink(@PathVariable (value = "id") Long id, @RequestBody Drink drink) throws Exception {
         var drinkUpdate = this.drinkService.updateDrink(id, drink);
         return new ResponseEntity<>(drinkUpdate, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Drink> deleteDrinkById(@PathVariable (value = "id") Long id) throws Exception {
         return this.drinkService.deleteDrink(id);
     }
