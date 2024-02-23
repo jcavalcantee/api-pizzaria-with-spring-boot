@@ -2,6 +2,7 @@ package com.management.pizzaria.models;
 
 import com.management.pizzaria.dtos.ProductDTO;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "TB_PRODUCTS")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Product {
+public class Product extends RepresentationModel<Product> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

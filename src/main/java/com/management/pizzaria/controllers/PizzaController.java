@@ -19,7 +19,7 @@ public class PizzaController {
     private PizzaService pizzaService;
 
     @PostMapping
-    public ResponseEntity<Pizza> createPizza(@RequestBody PizzaDTO pizzaDTO) {
+    public ResponseEntity<Pizza> createPizza(@RequestBody PizzaDTO pizzaDTO) throws Exception {
         Pizza newPizza = this.pizzaService.createPizza(pizzaDTO);
         return new ResponseEntity<>(newPizza, HttpStatus.CREATED);
     }
@@ -42,13 +42,13 @@ public class PizzaController {
         return new ResponseEntity<>(pizza, HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Pizza> updatePizza(@PathVariable (value = "id") Long id, @RequestBody Pizza pizza) throws Exception {
         var pizzaUpdate = this.pizzaService.updatePizza(id, pizza);
         return new ResponseEntity<>(pizzaUpdate, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Pizza> deletePizza(@PathVariable (value = "id") Long id) {
         return this.pizzaService.deletePizza(id);
     }
