@@ -39,7 +39,7 @@ public class OrderService {
         BigDecimal totalOrder = BigDecimal.ZERO;
 
         orderRepository.save(order);
-        order.setOrderId(encontrarIdPorData(order.getOrderDate()));
+        order.setOrderId(findIdByDate(order.getOrderDate()));
         for (ProductOrderDTO productOrderDTO : itemsOrderDTO) {
             Long productId = productOrderDTO.productId();
             int quantity = productOrderDTO.quantity();
@@ -60,9 +60,8 @@ public class OrderService {
 
         return order;
     }
-
-    private Long encontrarIdPorData(Date dataPedido){
-        return orderRepository.encontrarIdPorData(dataPedido);
+    private Long findIdByDate(Date dataPedido){
+        return orderRepository.findIdByDate(dataPedido);
     }
 
     public List<Order> listAllOrders() {
@@ -71,14 +70,5 @@ public class OrderService {
 
     public Order getOrderById(Long id) throws OrderNotFoundException {
         return this.orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order with id provided not found"));
-    }
-
-    public ResponseEntity<Order> deleteOrderById(Long id) {
-
-        if (orderRepository.findById(id).isPresent()) {
-            this.orderRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
