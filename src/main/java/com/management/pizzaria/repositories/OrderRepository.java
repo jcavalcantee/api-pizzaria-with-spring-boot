@@ -10,5 +10,5 @@ import java.util.Date;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT o.id FROM Order o WHERE o.orderDate = :dataPedido")
-    Long encontrarIdPorData(@Param("dataPedido") Date dataPedido);
+    Long findIdByDate(@Param("dataPedido") Date dataPedido);
 }
