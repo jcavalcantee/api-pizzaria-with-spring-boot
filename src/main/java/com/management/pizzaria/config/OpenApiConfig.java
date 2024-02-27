@@ -15,7 +15,7 @@ public class OpenApiConfig {
                .info(new Info()
                        .title("RESTful API with SpringBoot 3")
                        .version("v1")
-                       .description("Some description")
+                       .description("API REST responsible for managing a pizzeria.")
                        .termsOfService("")
                        .license(new License().name("Apache 2.0")
                                .url("")));
