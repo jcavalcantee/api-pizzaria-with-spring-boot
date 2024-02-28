@@ -6,6 +6,7 @@ import com.management.pizzaria.models.Customer;
 import com.management.pizzaria.models.Drink;
 import com.management.pizzaria.services.DrinkService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,9 +49,12 @@ public class DrinkController {
             tags = {"Drink"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Drink.class))
-                    ),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                            content = {
+                                    @Content(
+                                            mediaType = "application/json",
+                                            array = @ArraySchema(schema = @Schema(implementation = Drink.class))
+                                    )
+                            }),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),

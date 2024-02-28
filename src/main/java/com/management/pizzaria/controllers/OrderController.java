@@ -1,20 +1,17 @@
 package com.management.pizzaria.controllers;
 
 import com.management.pizzaria.dtos.OrderDTO;
-import com.management.pizzaria.dtos.ProductOrderDTO;
 import com.management.pizzaria.exceptions.OrderNotFoundException;
-import com.management.pizzaria.models.Drink;
+import com.management.pizzaria.models.Customer;
 import com.management.pizzaria.models.Order;
-import com.management.pizzaria.models.PaymentType;
-import com.management.pizzaria.repositories.OrderRepository;
 import com.management.pizzaria.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +49,12 @@ public class OrderController {
             tags = {"Order"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Order.class))
-                    ),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                            content = {
+                                    @Content(
+                                            mediaType = "application/json",
+                                            array = @ArraySchema(schema = @Schema(implementation = Order.class))
+                                    )
+                            }),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),

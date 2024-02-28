@@ -17,16 +17,6 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public void saveProduct(Product product) {
-        this.productRepository.save(product);
-    }
-
-    public Product createProduct(ProductDTO productDTO) {
-        Product newProduct = new Product(productDTO);
-        this.saveProduct(newProduct);
-        return newProduct;
-    }
-
     public List<Product> getAllProducts() {
         return this.productRepository.findAll();
     }
@@ -34,14 +24,6 @@ public class ProductService {
     public Product getProductById(Long id) throws Exception{
         return this.productRepository.findById(id).orElseThrow(
                 () -> new Exception("Product with ID provided not found"));
-    }
-
-    public Product updateProduct(Long id, Product product) throws Exception{
-        Product existProduct = this.productRepository.findById(id).orElseThrow(
-                () -> new Exception("Product with ID provided not found"));
-        existProduct.setPrice(existProduct.getPrice());
-
-        return this.productRepository.save(existProduct);
     }
 
     public void deleteProduct(Long id) {
