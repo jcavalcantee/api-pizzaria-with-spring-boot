@@ -33,6 +33,7 @@ spring.jpa.hibernate.ddl-auto=none
 ```
 ## Executando
 Você pode executar a aplicação de diferentes maneiras:
+
 **Opção 1: Linha de Comando**
 ```bash 
 mvn spring-boot run
