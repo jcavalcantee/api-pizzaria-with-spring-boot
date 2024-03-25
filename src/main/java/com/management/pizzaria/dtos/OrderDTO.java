@@ -1,6 +1,6 @@
 package com.management.pizzaria.dtos;
 
-import com.management.pizzaria.models.PaymentType;
+import com.management.pizzaria.enums.PaymentType;
 
 import java.util.Date;
 import java.util.List;

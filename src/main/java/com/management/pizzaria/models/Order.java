@@ -1,10 +1,9 @@
 package com.management.pizzaria.models;
 
-import com.management.pizzaria.dtos.ProductOrderDTO;
+import com.management.pizzaria.enums.PaymentType;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity

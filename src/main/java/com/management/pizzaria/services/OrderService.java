@@ -1,21 +1,16 @@
 package com.management.pizzaria.services;
 
-import com.management.pizzaria.dtos.OrderDTO;
 import com.management.pizzaria.dtos.ProductOrderDTO;
+import com.management.pizzaria.enums.PaymentType;
 import com.management.pizzaria.exceptions.OrderNotFoundException;
 import com.management.pizzaria.models.*;
 import com.management.pizzaria.repositories.OrderRepository;
 import com.management.pizzaria.repositories.ProductOrderRepository;
 import com.management.pizzaria.repositories.ProductRepository;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +41,6 @@ public class OrderService {
 
             Product product = this.productRepository.findById((long) productOrderDTO.productId())
                     .orElseThrow(() -> new Exception("Product not found!"));
-
 
             ProductOrder productOrder = new ProductOrder();
             productOrder.setId(new ProductOrderKey(order, product));
