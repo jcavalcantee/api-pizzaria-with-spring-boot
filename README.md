@@ -38,8 +38,7 @@ Você pode executar a aplicação de diferentes maneiras:
 ```bash 
 mvn spring-boot run
 ```
-  
 
 **Opção 2: IDE**
 - Importe o projeto em sua IDE de preferência que suporte Spring Boot e Maven
-- Procure a classe principal DemoRestTemplateApplication.java e execute como uma aplicação Java.
+- Procure a classe principal PizzariaApplication.java e execute como uma aplicação Java.
