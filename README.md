@@ -1,7 +1,7 @@
 # RESTful API com SpringBoot 3 - Gerenciamento de Pizzaria
 
 Este projeto se trata de uma API RESTful para gerenciar uma pizzaria. A API permite realizar operações básicas como criação, leitura, atualização e exclusão de produtos,
-clientes e pedidos.
+clientes e pedidos. Além disso, essa aplicação consome uma API externa (ViaCEP API) para buscar dados relacionados a endereços.
 
 ### Tecnologias Utilizadas:
 
@@ -29,7 +29,7 @@ spring.datasource.username=pizzaria
 spring.datasource.password=101729
 
 spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=none
+spring.jpa.hibernate.ddl-auto=update
 ```
 ## Executando
 Você pode executar a aplicação de diferentes maneiras:
