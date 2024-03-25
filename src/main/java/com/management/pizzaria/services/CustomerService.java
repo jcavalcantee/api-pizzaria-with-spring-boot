@@ -83,10 +83,6 @@ public class CustomerService {
                 () -> new Exception("Customer with ID provided not found!"));
         existCustomer.setName(customer.getName());
         existCustomer.setTelphone(customer.getTelphone());
-        existCustomer.setZipCode(customer.getZipCode());
-        existCustomer.setStreet(customer.getStreet());
-        existCustomer.setDistrict(customer.getDistrict());
-        existCustomer.setNumber(customer.getNumber());
 
         existCustomer.add(linkTo(methodOn(CustomerController.class).updateCustomer(existCustomer.getId(), customer)).withSelfRel());
         existCustomer.add(linkTo(methodOn(CustomerController.class).findCustomerById(existCustomer.getId())).withRel("Find By ID"));
