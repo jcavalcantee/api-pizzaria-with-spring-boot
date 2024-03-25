@@ -1,4 +1,4 @@
-package com.management.pizzaria.models;
+package com.management.pizzaria.enums;
 
 public enum PaymentType {
     PIX,
