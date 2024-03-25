@@ -17,7 +17,7 @@ clientes e pedidos. Além disso, essa aplicação consome uma API externa (ViaCE
 ## Pré-requisitos
 Antes de começar, certifique-se de que você tenha as seguintes ferramentas instaladas:
 - **JDK 11 ou superior**
-- **Maven (opcional)**
+- **Maven**
 - **MySQL**
 
 ## Configuração do Banco de Dados
